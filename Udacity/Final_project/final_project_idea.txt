@@ -1,0 +1,28 @@
+Personal Motivation:
+1) What are you most passionate about? How might an app help?
+- I always forget what is left in the freezer and food go bad without nitice. I need an app to remind me and send alert to me when they are about to go rotten.
+
+Some problems for the current freezer app:
+1) no barcode, it’s not convenient to add food.
+2) even if they have a barcode, items of international food are not reconized
+3) how to solve the problem that they do not have a barcode,
+4) send pictures(optional function)
+5) generate a shopping list with items added according to their cetegory
+
+Basic functions:
+1) use scan bar to add food 
+2) alert when items are about to expire ( calculate the suggested using speed)
+3) no user autherization needed
+
+Features:
+-required
+-reasonable:
+-ambitious:
+
+paperprototype->how much time->how long to implement each one
+
+Design
+======
+I) UI
+1. UI elements
+II) Web API

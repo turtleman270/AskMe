@@ -1,0 +1,10 @@
+05/05/2016
+	
+This is the first log. I've been struggled for weeks to decide on which project to work for the next three months. I finally decide to do a frige management app. Although there are already some apps in the App store now, some functions are not complete. Until today, I realize it's the right app to build. The app not only helps people manage the frige better, eat fresher food, but also remind people how much food is wasted during the month or year. With all the wasted food, many African children may survive the hunger. We need to represent data to remind them that: try not to waste food. Your personal matters do affect the world.
+
+Thus, this app has two main functions: one is to keep track of your expiring food and send alerts to you, in order to keep you from wasting food. But if you still do not take any action, we record the waste you have. So, the other function of this app is to generate a report of how much food is wasted. 
+
+From my personal experience, people are usually fine with throwing away individual items a couple of times per week. They may feel guilty at the time they threw it, or even try not to waste food for the next days. But eventually, they will forget about it. They will go back to the same habbit and forget there is a pound of frozen meat or a bunch of bananas. With all data represneted, the app constantly reminds them not to waste food. This is like other management apps, fit apps, time log apps, constantly remind people to do things they easily forget or out of laziness.
+
+So, let's do it! It's a simple app but may make some difference.
+
