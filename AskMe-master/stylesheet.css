@@ -42,12 +42,7 @@ textarea {
 .inner_comment {
     display: inline-block;
 }
-h4 {
-    font-size: 20px;
-    word-wrap:break-word;
-}
 #name{
-    
     font-family: Impact;
     font-size :40px;
     text-align: center;
@@ -56,6 +51,51 @@ h4 {
     color: white;
     background: #0066FF;
     word-wrap: normal;
-    width: 80px;
-    
+    width: 80px;   
+}
+body {
+    background-image: url("starter_skeleton/img/disruptive-health-care_3.jpg");
+}
+#space {
+	height: 10%;
+}
+#home {
+	/* height: 20%; */ 
+	/*Horiztonally and vertically centering content"*/
+    color: darkslategrey;
+    text-align: center;
+    display: flex;
+	flex-direction: column; 
+	justify-content: top;
+    align-items: center;
+}
+container .jumbotron{
+	color: darkslategrey;
+}
+h1{
+	color: darkslategrey;
+}
+h2{
+    color: darkslategrey;
+    text-align: center;
+}
+h3{
+    font-size: 20px;
+}
+h4 {
+    font-size: 20px;
+    word-wrap:break-word;
+}
+p {
+	color: darkslategrey;
+}
+.badge{
+	color: #FFFFFF;
+	background-color: #f49e9f;
+}
+.breadcrumb{
+       text-align: center;
+}
+list-group list-group-item .badge{
+    color: darkslategrey;
 }
