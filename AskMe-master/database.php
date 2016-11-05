@@ -1,6 +1,6 @@
 <?php
 	// Connect to MySQL database news via php user
-	$mysqli = new mysqli('localhost', 'phpuser', 'php', 'wustl');
+	$mysqli = new mysqli('localhost', 'archhacker', 'archhacker', 'ASKME');
 	//$mysqli = new mysqli('localhost', 'phpuser', 'news', 'news');
 	 
 	if($mysqli->connect_errno) {

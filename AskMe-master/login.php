@@ -4,10 +4,10 @@
     require 'database.php';
      
     // Use a prepared statement
-    $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE username=?");   
+    $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id=?");   
     // Bind the parameter
-    $stmt->bind_param('s', $user);
-    $user = $_POST['username'];
+    $stmt->bind_param('d', $id);
+    $id = $_POST['userid'];
     // Execute
     $stmt->execute();
     // Bind and fetch the results
@@ -21,7 +21,7 @@
         $_SESSION['user_id'] = $user_id;
         $_SESSION['token'] = substr(md5(rand()), 0, 10); // generate a 10-character random string
         // Redirect to news page
-        header("Location: news.php");
+        header("Location: posts.php");
     } else {
         // Login failed; redirect back to the login screen
         header("Location: home.php?login=failed");
