@@ -1,0 +1,61 @@
+/*Layout example from http://www.456bereastreet.com/lab/developing_with_web_standards/csslayout/2-col/ */
+
+#wrap {
+    width:750px;
+    margin:0 auto;
+    background:#99c;
+}
+#header {
+    padding:5px 10px;
+    background:#ddd;
+}
+#sidebar {
+    float:right;
+    width:230px;
+    padding:10px;
+    background:#ccccff;
+}
+#main {
+    float:left;
+    width:480px;
+    padding:10px;
+    background:#cce5ff;
+}
+html {
+    font-family: Arial;
+    margin:0;
+    padding:0;
+    color:#000;
+    background:#ffe6cc;
+}
+textarea {
+    resize: vertical;
+}
+.inner
+{
+    display: inline-block;
+}
+.inner_story
+{
+    display: inline-block;
+}
+.inner_comment {
+    display: inline-block;
+}
+h4 {
+    font-size: 20px;
+    word-wrap:break-word;
+}
+#name{
+    
+    font-family: Impact;
+    font-size :40px;
+    text-align: center;
+}
+.box{
+    color: white;
+    background: #0066FF;
+    word-wrap: normal;
+    width: 80px;
+    
+}
