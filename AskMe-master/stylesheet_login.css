@@ -70,6 +70,6 @@ fieldset {
 	top: 50%;
 	left: 50%;
 	transform: translate(-50%, -50%);
-    background: #e6EEEE;
+    background: #ebecee;
 	/* Centering code from https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/ */
 }

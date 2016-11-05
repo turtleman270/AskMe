@@ -8,9 +8,10 @@ function loginAjax(event) {
     xmlHttp.open("POST", "login.php", true); // Starting a POST request
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.addEventListener("load", function(event){
+        alert(event.target.responseText);
         var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
         if (jsonData.success) {
-            var userID = jsonData.userID;
+            var userID = jsonData.id;
             var token = jsonData.token; // Set token for use in POST requests while logged in
             post_to_url("posts.php", {sessionToken: token, sessionUserID: userID});
         } else {

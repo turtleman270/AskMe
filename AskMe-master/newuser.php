@@ -24,8 +24,6 @@
             // Execute and close
             $stmt->execute();
             $stmt->close();
-            
-            echo "<p><strong>New user added</strong></p>";
         }
 
         // Use a prepared statement
