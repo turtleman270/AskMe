@@ -12,8 +12,13 @@
             <input type="submit" value="Sign in"/>
         </form>
         <form action="newuser.php" method="POST">
-            <label>New user name: <input type="text" name="userid"/></label>
-            <label>New user password: <input type="password" name="password"/></label>
+            <label>Age: <input type="text" name="age"/></label>
+            <label>Weight: <input type="text" name="weight"/></label>
+            <label>Height: <input type="text" name="height"/></label>
+            <label>Gender: <input type="text" name="gender"/></label>
+            <label>Allergies: <input type="text" name="allergies"/></label>
+            <label>Password: <input type="password" name="password"/></label>
+            <label>Confirm Password: <input type="password" name="confirmpassword"/></label>
             <input type="submit" value="New user"/>
         </form>
         <form action="posts.php" method="POST">     

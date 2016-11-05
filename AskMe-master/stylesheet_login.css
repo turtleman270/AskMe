@@ -1,0 +1,75 @@
+/* CSS to modify jQuery UI problems */
+.ui-state-default {
+    background: #f1f1f1;
+}
+.ui-widget-header .ui-state-default {
+   background: #f1f1f1;
+   color: black;
+}
+.ui-widget-content .ui-state-default {
+    background: #f1f1f1;
+    color: black;
+}
+.ui-state-hover {
+    background: #ddd;
+}
+.ui-widget-header .ui-state-hover {
+   background: #ddd;
+}
+.ui-widget-content .ui-state-hover {
+    background: #ddd;
+}
+.ui-widget {
+    font-size: 14px;
+    font-family: Arial;
+    color: black;
+}
+.ui-widget button {
+    font-size: 14px;
+    font-family: Arial;
+    color: black;
+}
+.ui-widget input {
+    font-family: Arial;
+}
+
+
+/* Form CSS */
+
+label {
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 90px;
+    text-align: left;
+    font-family: Arial;
+    font-size: 14px;
+    margin-top: 5px;
+    padding-top: 2px;
+}
+
+input {
+    display: inline-block;
+    float: left;
+    width: 200px;
+    height: 14px;
+    margin-top: 5px;
+}
+
+#buttons {
+    clear: both;
+    padding-top: 15px;
+}
+
+html {
+   /*background: #e6EEEE;*/
+}
+
+fieldset {
+    position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+    background: #e6EEEE;
+	/* Centering code from https://css-tricks.com/quick-css-trick-how-to-center-an-object-exactly-in-the-center/ */
+}

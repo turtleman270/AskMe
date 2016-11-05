@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ask Me</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script> <!--jQuery-->
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css"> <!--jQuery UI CSS-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script> <!--jQuery UI-->
+    <script src="user_scripts.js"></script>  <!--Log in and registration functions-->
+     <link rel="stylesheet" type="text/css" href="stylesheet_login.css" />
+</head>
+<body>
+    <fieldset>
+        <div id="userform">
+            <label for="userid">Userid: </label><input type="text" id="userid" />
+            <label for="password">Password: </label><input type="password" id="password" /><br>
+        </div>
+        <div id="button1">
+            <button id="login_btn">Log in</button>
+        </div>
+        <div id="newuserform">
+            <label for="newpassword">Password: </label><input type="password" id="newpassword" /><br>
+            <label for="age">age </label><input type="text" id="age" />
+            <label for="weight">weight </label><input type="number" step="any" id="weight" />
+            <label for="height">height </label><input type="number" step="any" id="height" />
+            <select id="gender" name="gender" >
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+                <option value="other">Other</option>
+            </select><br>
+            <select id="smoke" name="smoke" >
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+            <select id="alcohol" name="alcohol" >
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+            <select id="drugs" name="drugs" >
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select><br>
+            <label for="allergies">allergies </label><input type="text" id="allergies" />
+        </div>
+        <div id="button2">
+            <button id="new_user_btn">Register</button><br>
+        </div>
+    </fieldset>
+    <script>
+        $("#login_btn").button().on("click", function() {
+            loginAjax();
+        });
+        $("#new_user_btn").button().on("click", function() {
+            newUserAjax();
+        });
+    </script>
+    
+</body>
+</html>
