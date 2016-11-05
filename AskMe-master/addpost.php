@@ -22,16 +22,16 @@
         printf("Query Prep Failed: %s\n", $mysqli->error);
         exit;
     }
+    $post_array = array();
     // Bind the parameter
     $stmt->bind_param('isss', $user_id, $title, $question, $datestring);
     $user_id = $_SESSION['user_id'];
-    $title = $_POST['title'];
-    $question = $_POST['question'];
     // Execute and close
     $stmt->execute();   
     $stmt->close();
     
-    // Redirect to news page
-    header("Location: posts.php");
+    $post_array['success'] = true;
+    echo json_encode($post_array);
+    exit;  
 
 ?>

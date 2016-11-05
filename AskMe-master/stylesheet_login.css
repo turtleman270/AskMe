@@ -36,6 +36,11 @@
 
 /* Form CSS */
 
+body {
+    background-image: url("disruptive-health-care_3.gif");
+    height: 10%;
+}
+
 label {
     display: inline-block;
     float: left;
