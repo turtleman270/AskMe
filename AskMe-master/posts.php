@@ -32,8 +32,6 @@
             $username_stmt->bind_result($id);
             // Fetch
             $username_stmt->fetch();
-
-            echo $user_id;
             
             // Open div "wrap"
             echo "<div id=\"wrap\">";
@@ -79,7 +77,66 @@
                 echo "Register to Ask Questions!";
                 // Close div "sidebar"
                 echo "</div>";
-            }          
+            }  
+
+            // QUERY for questions -- order by dates
+            // Use a prepared statement 
+            $question_stmt = $mysqli->prepare("select questions.id, questions.user_id, title, questions, date from questions");
+            if (!$question_stmt) {
+                printf("Query Prep Failed: %s\n", $mysqli->error);
+                exit;
+            }
+            // Execute, store, and bind result
+            $question_stmt->execute();
+            $question_stmt->store_result();
+            $question_stmt->bind_result($id, $user_id, $title, $question, $datestring);
+            
+            // Open div "main"
+            echo "<div id=\"main\">";
+            
+            // Display question info
+            while($question_stmt->fetch()){
+                
+                // Display story info
+                echo "<h4>" . "<a name=\"$id\">" . htmlspecialchars($title) . "</a>". "</h4>";
+                echo "Posted by: on " . $datestring;
+                echo "<br>";
+                echo htmlspecialchars($question);
+                echo "<br>";
+                
+                // Form to edit question -- only show if user posted it
+                if ($_SESSION['user_id'] == $user_id) {
+                    echo "<div class=\"inner_question\">";
+                    echo "<form action=\"posts.php#$id\" method=\"get\">";
+                        echo "<input type=\"hidden\" name=\"id\" value=$id>";
+                        echo "<input type=\"hidden\" name=\"edit\" value=true>";
+                        echo "<input type=\"hidden\" name=\"show\" value=false>";
+                        echo "<input type=\"submit\" value=\"Edit question\">";
+                    echo "</form>";
+                    echo "</div>";
+                }
+                
+                // If "Edit story" button pressed, show form to edit story
+                if ($_SESSION['user_id'] == $user_id&&$_GET['id'] == $id && $_GET['edit'] == "true") {
+                    // Editing form
+                    echo "<form action=\"editquestion.php\" method=\"POST\">";
+                        echo "<input type=\"hidden\" name=\"id\" value=$id>";
+                        echo "<label>Title: <input type=\"text\" size = 67 name=\"title\" value=\"$title\" /></label><br>";
+                        echo "<label>Question: </label><br><textarea cols=\"65\" rows=\"3\" name=\"question\">$question</textarea><br>";
+                        echo "<input type=\"hidden\" name=\"token\" value=\"$token\"/>";
+                        echo "<input type=\"submit\" value=\"Submit changes\"/>";
+                    echo "</form>";
+                    
+                    // Button to cancel chagnes
+                    echo "<div class=\"inner_question\">";
+                    echo "<form action=\"posts.php#$id\" method=\"get\">";
+                        echo "<input type=\"submit\" value=\"Cancel changes\">";
+                    echo "</form>";
+                    echo "</div>";
+                }
+                
+                   
+            }        
             
             
         ?>
