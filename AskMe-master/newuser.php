@@ -18,9 +18,17 @@
                 exit;
             }
             // Bind the parameter
-            $stmt->bind_param('siddsssss',$pwd_hash, $age, $weight,$height,$gender,$allergies, $smoke, $alcohol,$drugs);
+            $stmt->bind_param('siddsssss',$pwd_hash, $age, $weight,$height,$gender,$allergies, $smoke, $alcohol, $drugs);
             // Encrypt password
             $pwd_hash = crypt($_POST['newpassword']);
+            $age = $_POST['age'];
+            $weight = $_POST['weight'];
+            $height = $_POST['height'];
+            $gender = $_POST['gender'];
+            $allergies = $_POST['allergies'];
+            $smoke = $_POST['smoke'];
+            $alcohol = $_POST['alcohol'];
+            $drugs = $_POST['drugs'];
             // Execute and close
             $stmt->execute();
             $stmt->close();
