@@ -7,16 +7,16 @@
     <body>
         <div id="users">
         <form action="login.php" method="POST">     
-            <label>User name: <input type="text" name="username" /></label>
+            <label>User name: <input type="text" name="userid" /></label>
             <label>Password: <input type="password" name="password" /></label>
             <input type="submit" value="Sign in"/>
         </form>
         <form action="newuser.php" method="POST">
-            <label>New user name: <input type="text" name="username"/></label>
+            <label>New user name: <input type="text" name="userid"/></label>
             <label>New user password: <input type="password" name="password"/></label>
             <input type="submit" value="New user"/>
         </form>
-        <form action="news.php" method="POST">     
+        <form action="posts.php" method="POST">     
             <input type="submit" value="Guest"/>
         </form>
         <?php
