@@ -211,7 +211,7 @@ function getPost() {
             body.appendChild(answersBody);
 
             document.getElementById("follow_btn").addEventListener("click", function() {
-                followPost();
+                followPost(question_id);
             });
             
         } else {
@@ -223,7 +223,7 @@ function getPost() {
 }
 
 // follow post
-function followPost() { 
+function followPost(question_id) { 
     // Get fields from form
     
     var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id);
@@ -237,6 +237,27 @@ function followPost() {
             getPosts();
         } else {
             alert("Question not followed.  " + jsonData.message);
+        }
+        this.removeEventListener("load", this);
+    }, false); // Bind the callback to the load event
+    xmlHttp.send(dataString); // Send the data
+}
+
+// follow post
+function unfollowPost(question_id) { 
+    // Get fields from form
+    
+    var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id);
+    var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "unfollowPost.php", true); // Starting a POST request
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.addEventListener("load", function(event){
+        var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
+        if (jsonData.success) {
+            alert("Question unfollowed!");
+            getFollowingPosts();
+        } else {
+            alert("Question not unfollowed.  " + jsonData.message);
         }
         this.removeEventListener("load", this);
     }, false); // Bind the callback to the load event
@@ -293,12 +314,13 @@ function displayPosts(jsonData) {
             div.setAttribute("id", question_id);
             
             // Title
-            var titleF = document.createElement("h4");
+            var titleF = document.createElement('a');
+            titleF.setAttribute('class', 'detail');
             titleF.setAttribute("id", title);
             titleF.appendChild(document.createTextNode(title));
-            div.appendChild(titleF);
-            var t = document.getElementById(title);
             titleF.setAttribute("href", "postDetail.php?id=" + question_id);
+            div.appendChild(titleF);
+            
 
             // date
             var dateF = document.createElement("p");
@@ -312,10 +334,20 @@ function displayPosts(jsonData) {
             questionF.appendChild(document.createTextNode(question));
             div.appendChild(questionF);
 
+            var btn = document.createElement("BUTTON");
+            btn.setAttribute("id", "follow_btn");
+            btn.appendChild(document.createTextNode("follow"));
+            div.appendChild(btn);
+
             div.appendChild(document.createElement("br"));
 
             var body = document.getElementById("postbody");
             body.appendChild(div);
+
+            document.getElementById("follow_btn").addEventListener("click", function() {
+                followPost(question_id);
+            });
+
         }());                 
     }
 }
