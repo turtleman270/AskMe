@@ -45,7 +45,7 @@ function getAnswers() {
 
     clearAnswers();
 
-    var dataString = "token=" + encodeURIComponent(token);
+    var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id);
     var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
     xmlHttp.open("POST", "getAnswers.php", true); // Starting a POST request
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
@@ -59,12 +59,6 @@ function getAnswers() {
             var doctor_id = jsonData[i].doctor_id;
             var likes = jsonData[i].likes;
             var reply = jsonData[i].reply;
-            var dateString = jsonData[i].datestring;
-            var date_array = dateString.split("-");
-            var year = parseInt(date_array[0]);
-            var month = parseInt(date_array[1]);
-            var day = parseInt(date_array[2]);
-            var jsDate = Date(year, month, day);
             
             var div = document.createElement("div");
             div.setAttribute("id", question_id);
@@ -74,12 +68,6 @@ function getAnswers() {
             doctorF.setAttribute("id", doctor_id);
             doctorF.appendChild(document.createTextNode(doctor_id));
             div.appendChild(doctorF);
-
-            // date
-            var dateF = document.createElement("p");
-            dateF.setAttribute("class", jsDate);
-            dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
-            div.appendChild(dateF);
 
             // reply
             var replyF = document.createElement("p");
@@ -213,6 +201,8 @@ function getPost() {
             document.getElementById("follow_btn").addEventListener("click", function() {
                 followPost(question_id);
             });
+
+            getAnswers();
             
         } else {
             alert("Can't get question detail!  " + jsonData.message);

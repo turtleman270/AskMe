@@ -32,3 +32,11 @@ INSERT INTO questions (title, questions, date, age, height, weight, gender, smok
 3. follow
 INSERT INTO follow (question_id, user_id) VALUES (1, 1);
 
+4. doctor:
+
+INSERT INTO doctors (name, password, gender) VALUES ('Saul Metzstein', '$1$B2qPMLtn$7eGOq.N.JUYQUW2vNtECE.', 'male');
+
+
+5. answers:
+
+INSERT INTO replies (doctor_id, question_id,reply) VALUES (1, 5,'As you may have read, Type 2 diabetes is a progressive disease. Will you require insulin? That all depends on individual factors that includes, among many other factors, weight, exercise, genetics, hormones and beta-cells, those cells that produce insulin in your pancreas. Research shows that managing your diabetes early in the disease process can have big payoffs in later years. Joining a support group for people with diabetes can be helpful in keeping you going in your health quest. Following up with your health care team regularly and keeping abreast on the new developments in diabetes management can also benefit you.' );

@@ -25,7 +25,7 @@
 
     $question_stmt->execute();
     $question_stmt->store_result();
-    $question_stmt->bind_result($id, $doctor_id, $likes, $reply, $dateString);
+    $question_stmt->bind_result($id, $doctor_id, $likes, $reply);
     $questions_array = array();    
     $cnt = 0;
     
@@ -35,7 +35,7 @@
         $questions_array['question' + $cnt]['doctor_id'] = $doctor_id;
         $questions_array['question' + $cnt]['likes'] = $likes;
         $questions_array['question' + $cnt]['reply'] = $reply;
-        $questions_array['question' + $cnt]['datestring'] = $datestring;
+        // $questions_array['question' + $cnt]['datestring'] = $datestring;
         $cnt++;
 
     }
