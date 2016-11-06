@@ -269,3 +269,40 @@ list-group list-group-item .badge{
 .navbar-default {
     /*background-color: #eeeeee;*/
 }
+.custom-form {
+  margin: 40px 20px;
+}
+
+.c {
+  margin: auto;
+  max-width: 600px;
+  text-align: center;
+
+}
+
+.p {
+  font-size: .9em;
+  padding-top: 140px;
+}
+#signInPage {
+  margin-top: 20px;
+}
+#signin {
+  background: #edf0f1;
+}
+#signUpPage {
+  margin-top: 20px;
+}
+#logInTitle {
+  padding-bottom: 30px;
+}
+#signForm {
+  margin: 10px;
+}
+#signUpTitle {
+  padding-bottom: 10px;
+}
+#SignUpDescrip {
+  padding-bottom: 30px;
+}
+
