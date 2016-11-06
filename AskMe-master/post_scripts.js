@@ -15,7 +15,7 @@ function clearPosts() {
     }
 }
 
-function getPosts() {
+function getAllPosts() {
 
     clearPosts();
 
@@ -26,47 +26,27 @@ function getPosts() {
     xmlHttp.addEventListener("load", function(event){
         var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
         if (jsonData.success) {
-            for (i = 0; i < jsonData.count; i++) { // For each question in the jsonData response
-                (function() {
-                    // Parse jsonData
-                    var question_id = jsonData[i].id;
-                    var user_id = jsonData[i].user_id;
-                    var title = jsonData[i].title;
-                    var question = jsonData[i].question;
-                    var dateString = jsonData[i].datestring;
-                    var date_array = dateString.split("-");
-                    var year = parseInt(date_array[0]);
-                    var month = parseInt(date_array[1]);
-                    var day = parseInt(date_array[2]);
-                    var jsDate = Date(year, month, day);
-                    
-                    var div = document.createElement("div");
-                    div.setAttribute("id", question_id);
-                    
-                    // Title
-                    var titleF = document.createElement("h4");
-                    titleF.setAttribute("class", title);
-                    titleF.appendChild(document.createTextNode(title));
-                    div.appendChild(titleF);
+            displayPosts(jsonData);
+        } else {
+            alert("Error fetching assignments.  " + jsonData.message);
+        }
+        this.removeEventListener("load", this);
+    }, false); // Bind the callback to the load event
+    xmlHttp.send(dataString); // Send the data
+}
 
-                    // date
-                    var dateF = document.createElement("p");
-                    dateF.setAttribute("class", jsDate);
-                    dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
-                    div.appendChild(dateF);
+function getFollowingPosts() {
 
-                    // Question
-                    var questionF = document.createElement("p");
-                    questionF.setAttribute("class", question);
-                    questionF.appendChild(document.createTextNode(question));
-                    div.appendChild(questionF);
+    clearPosts();
 
-                    div.appendChild(document.createElement("br"));
-
-                    var body = document.getElementById("postbody");
-                    body.appendChild(div);
-                }());                 
-            }
+    var dataString = "token=" + encodeURIComponent(token);
+    var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "getFollowingPosts.php", true); // Starting a POST request
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.addEventListener("load", function(event){
+        var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
+        if (jsonData.success) {
+            displayPosts(jsonData);
         } else {
             alert("Error fetching assignments.  " + jsonData.message);
         }
@@ -77,15 +57,18 @@ function getPosts() {
 
 
 // Add post to database
-function addPost() { 
+function addPost(event) { 
     // Get fields from form
-    var question_id = $("#question_id").val();
+    var title = $("#title").val();
+    var question = $("#question").val();
     
-    var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id); // Initialize our XMLHttpRequest instance
-    xmlHttp.open("POST", "addPost.php", true); // Starting a POST request
+    var dataString = "token=" + encodeURIComponent(token) + "&title=" + encodeURIComponent(title) + "&question=" + encodeURIComponent(question); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "addpost.php", true); // Starting a POST request
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.addEventListener("load", function(event){
+        alert(event.target.responseText);
         var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
+
         if (jsonData.success) {
             alert("Question asked!");
             getPosts();
@@ -97,23 +80,84 @@ function addPost() {
     xmlHttp.send(dataString); // Send the data
 }
 
+// get post detail
+function getPost() { 
+    
+    var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id);
+    var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "getPost.php", true); // Starting a POST request
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.addEventListener("load", function(event){
+        alert(event.target.responseText);
+        var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
+        if (jsonData.success) {
+            var title = jsonData.title;
+            var question = jsonData.question;
+            var dateString = jsonData.datestring;
+            var date_array = dateString.split("-");
+            var year = parseInt(date_array[0]);
+            var month = parseInt(date_array[1]);
+            var day = parseInt(date_array[2]);
+            var jsDate = Date(year, month, day);
+            
+            var div = document.createElement("div");
+            div.setAttribute("id", question_id);
+            
+            // Title
+            var titleF = document.createElement("h4");
+            titleF.setAttribute("class", title);
+            titleF.appendChild(document.createTextNode(title));
+            div.appendChild(titleF);
+
+            // date
+            var dateF = document.createElement("p");
+            dateF.setAttribute("class", jsDate);
+            dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
+            div.appendChild(dateF);
+
+            // Question
+            // var questionF = document.createElement("p");
+            // questionF.setAttribute("class", question);
+            // questionF.appendChild(document.createTextNode(question));
+            // div.appendChild(questionF);
+
+            div.appendChild(document.createElement("br"));
+
+            var btn = document.createElement("BUTTON");
+            btn.setAttribute("id", "follow_btn");
+            btn.appendChild(document.createTextNode("follow"));
+            div.appendChild(btn);
+
+            var body = document.getElementById("postdetail");
+            body.appendChild(div);
+
+            document.getElementById("follow_btn").addEventListener("click", function() {
+                followPost();
+            });
+            
+        } else {
+            alert("Can't get question detail!  " + jsonData.message);
+        }
+        this.removeEventListener("load", this);
+    }, false); // Bind the callback to the load event
+    xmlHttp.send(dataString); // Send the data
+}
+
 // follow post
 function followPost() { 
     // Get fields from form
-    var title = $("#title").val();
-    var question = $("#question").val();
     
-    var dataString = "token=" + encodeURIComponent(token) + "&title=" + encodeURIComponent(title) + "&question=" + encodeURIComponent(question);
+    var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id);
     var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
-    xmlHttp.open("POST", "addPost.php", true); // Starting a POST request
+    xmlHttp.open("POST", "followPost.php", true); // Starting a POST request
     xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
     xmlHttp.addEventListener("load", function(event){
         var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
         if (jsonData.success) {
-            alert("Question asked!");
+            alert("Question followed!");
             getPosts();
         } else {
-            alert("Question not added.  " + jsonData.message);
+            alert("Question not followed.  " + jsonData.message);
         }
         this.removeEventListener("load", this);
     }, false); // Bind the callback to the load event
@@ -150,15 +194,52 @@ function removeNodesByParentID(nodeID) {
     }
 }
 
+function displayPosts(jsonData) {
 
-function clearAddForm() {
-    
+    for (i = 0; i < jsonData.count; i++) { // For each question in the jsonData response
+                (function() {
+                    // Parse jsonData
+                    var question_id = jsonData[i].id;
+                    var user_id = jsonData[i].user_id;
+                    var title = jsonData[i].title;
+                    var question = jsonData[i].question;
+                    var dateString = jsonData[i].datestring;
+                    var date_array = dateString.split("-");
+                    var year = parseInt(date_array[0]);
+                    var month = parseInt(date_array[1]);
+                    var day = parseInt(date_array[2]);
+                    var jsDate = Date(year, month, day);
+                    
+                    var div = document.createElement("div");
+                    div.setAttribute("id", question_id);
+                    
+                    // Title
+                    var titleF = document.createElement("h4");
+                    titleF.setAttribute("id", title);
+                    titleF.appendChild(document.createTextNode(title));
+                    div.appendChild(titleF);
+                    var t = document.getElementById(title);
+                    titleF.setAttribute("href", "postDetail.php?id=" + question_id);
+
+                    // date
+                    var dateF = document.createElement("p");
+                    dateF.setAttribute("class", jsDate);
+                    dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
+                    div.appendChild(dateF);
+
+                    // Question
+                    var questionF = document.createElement("p");
+                    questionF.setAttribute("class", question);
+                    questionF.appendChild(document.createTextNode(question));
+                    div.appendChild(questionF);
+
+                    div.appendChild(document.createElement("br"));
+
+                    var body = document.getElementById("postbody");
+                    body.appendChild(div);
+                }());                 
+            }
 }
-
-function clearEditForm() {
-    
-}
-
 
 // From http://developertipsandtricks.blogspot.com/2014/03/post-data-with-javascript-like-form.html
 function post_to_url(path, params) {

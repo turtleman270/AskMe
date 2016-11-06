@@ -13,15 +13,17 @@
 
     // QUERY for questions -- order by dates
     // Use a prepared statement 
-    $question_stmt = $mysqli->prepare("select questions.id, title, questions, date from questions");
+    $question_stmt = $mysqli->prepare("select id, title, date from questions where id in (select question_id from follow where follow.user_id = ?)");
     if (!$question_stmt) {
         printf("Query Prep Failed: %s\n", $mysqli->error);
         exit;
     }
+    $question_stmt->bind_param('i', $id);
+    $id = $_SESSION['user_id'];
     // Execute, store, and bind result
     $question_stmt->execute();
     $question_stmt->store_result();
-    $question_stmt->bind_result($id, $title, $question, $datestring);
+    $question_stmt->bind_result($id, $title, $datestring);
     $questions_array = array();    
     $cnt = 0;
     
@@ -29,7 +31,6 @@
 
         $questions_array['question' + $cnt]['id'] = $id;
         $questions_array['question' + $cnt]['title'] = $title;
-        $questions_array['question' + $cnt]['question'] = $question;
         $questions_array['question' + $cnt]['datestring'] = $datestring;
         $cnt++;
 

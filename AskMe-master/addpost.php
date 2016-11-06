@@ -2,9 +2,9 @@
     session_start();
     
     // CSRF token
-    if ($_SESSION['token'] !== $_POST['token']) {
-        die("Request forgery detected");
-    }
+    // if ($_SESSION['token'] !== $_POST['token']) {
+    //     die("Request forgery detected");
+    // }
  
     // Determine current date and time in CST
     date_default_timezone_set("America/Chicago");
@@ -17,21 +17,21 @@
     require 'database.php';
     
     // Use a prepared statement
-    $stmt = $mysqli->prepare("insert into questions (user_id, title, questions, date) values (?, ?, ?, ?)");
+    $stmt = $mysqli->prepare("insert into questions (title, questions, date) values (?, ?, ?)");
     if(!$stmt){
         printf("Query Prep Failed: %s\n", $mysqli->error);
         exit;
     }
     $post_array = array();
     // Bind the parameter
-    $stmt->bind_param('isss', $user_id, $title, $question, $datestring);
-    $user_id = $_SESSION['user_id'];
+    $stmt->bind_param('sss', $title, $question, $datestring);
+    $title = $_POST['title'];
+    $question = $_POST['question'];
     // Execute and close
     $stmt->execute();   
     $stmt->close();
     
     $post_array['success'] = true;
-    echo json_encode($post_array);
+    header("Location: posts.php");
     exit;  
-
 ?>
