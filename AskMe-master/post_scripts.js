@@ -15,6 +15,12 @@ function clearPosts() {
     }
 }
 
+function clearAnswers() {
+    while (document.getElementById("postanswer").firstChild) {
+        document.getElementById("postanswer").removeChild(document.getElementById("postanswer").firstChild);
+    }
+}
+
 function getAllPosts() {
 
     clearPosts();
@@ -33,6 +39,74 @@ function getAllPosts() {
         this.removeEventListener("load", this);
     }, false); // Bind the callback to the load event
     xmlHttp.send(dataString); // Send the data
+}
+
+function getAnswers() {
+
+    clearAnswers();
+
+    var dataString = "token=" + encodeURIComponent(token);
+    var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "getAnswers.php", true); // Starting a POST request
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.addEventListener("load", function(event){
+        var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
+        if (jsonData.success) {
+            for (i = 0; i < jsonData.count; i++) { // For each question in the jsonData response
+            (function() {
+            // Parse jsonData
+            var reply_id = jsonData[i].id;
+            var doctor_id = jsonData[i].doctor_id;
+            var likes = jsonData[i].likes;
+            var reply = jsonData[i].reply;
+            var dateString = jsonData[i].datestring;
+            var date_array = dateString.split("-");
+            var year = parseInt(date_array[0]);
+            var month = parseInt(date_array[1]);
+            var day = parseInt(date_array[2]);
+            var jsDate = Date(year, month, day);
+            
+            var div = document.createElement("div");
+            div.setAttribute("id", question_id);
+            
+            // doctor_id
+            var doctorF = document.createElement("h4");
+            doctorF.setAttribute("id", doctor_id);
+            doctorF.appendChild(document.createTextNode(doctor_id));
+            div.appendChild(doctorF);
+
+            // date
+            var dateF = document.createElement("p");
+            dateF.setAttribute("class", jsDate);
+            dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
+            div.appendChild(dateF);
+
+            // reply
+            var replyF = document.createElement("p");
+            replyF.setAttribute("class", "reply");
+            replyF.appendChild(document.createTextNode(reply));
+            div.appendChild(replyF);
+
+            // like
+            var likeF = document.createElement("p");
+            likeF.setAttribute("class", "like");
+            likeF.appendChild(document.createTextNode(likes));
+            div.appendChild(likeF);
+
+            div.appendChild(document.createElement("br"));
+
+            var body = document.getElementById("postanswer");
+            body.appendChild(div);
+        }());                 
+    }
+            
+        } else {
+            alert("Error fetching answers.  " + jsonData.message);
+        }
+        this.removeEventListener("load", this);
+    }, false); // Bind the callback to the load event
+    xmlHttp.send(dataString); // Send the data
+
 }
 
 function getFollowingPosts() {
@@ -116,10 +190,10 @@ function getPost() {
             div.appendChild(dateF);
 
             // Question
-            // var questionF = document.createElement("p");
-            // questionF.setAttribute("class", question);
-            // questionF.appendChild(document.createTextNode(question));
-            // div.appendChild(questionF);
+            var questionF = document.createElement("p");
+            questionF.setAttribute("class", question);
+            questionF.appendChild(document.createTextNode(question));
+            div.appendChild(questionF);
 
             div.appendChild(document.createElement("br"));
 
@@ -130,6 +204,11 @@ function getPost() {
 
             var body = document.getElementById("postdetail");
             body.appendChild(div);
+
+            var answersBody = document.createElement("div");
+            answersBody.setAttribute("id", "postanswer");
+
+            body.appendChild(answersBody);
 
             document.getElementById("follow_btn").addEventListener("click", function() {
                 followPost();
@@ -197,48 +276,48 @@ function removeNodesByParentID(nodeID) {
 function displayPosts(jsonData) {
 
     for (i = 0; i < jsonData.count; i++) { // For each question in the jsonData response
-                (function() {
-                    // Parse jsonData
-                    var question_id = jsonData[i].id;
-                    var user_id = jsonData[i].user_id;
-                    var title = jsonData[i].title;
-                    var question = jsonData[i].question;
-                    var dateString = jsonData[i].datestring;
-                    var date_array = dateString.split("-");
-                    var year = parseInt(date_array[0]);
-                    var month = parseInt(date_array[1]);
-                    var day = parseInt(date_array[2]);
-                    var jsDate = Date(year, month, day);
-                    
-                    var div = document.createElement("div");
-                    div.setAttribute("id", question_id);
-                    
-                    // Title
-                    var titleF = document.createElement("h4");
-                    titleF.setAttribute("id", title);
-                    titleF.appendChild(document.createTextNode(title));
-                    div.appendChild(titleF);
-                    var t = document.getElementById(title);
-                    titleF.setAttribute("href", "postDetail.php?id=" + question_id);
+        (function() {
+            // Parse jsonData
+            var question_id = jsonData[i].id;
+            var user_id = jsonData[i].user_id;
+            var title = jsonData[i].title;
+            var question = jsonData[i].question;
+            var dateString = jsonData[i].datestring;
+            var date_array = dateString.split("-");
+            var year = parseInt(date_array[0]);
+            var month = parseInt(date_array[1]);
+            var day = parseInt(date_array[2]);
+            var jsDate = Date(year, month, day);
+            
+            var div = document.createElement("div");
+            div.setAttribute("id", question_id);
+            
+            // Title
+            var titleF = document.createElement("h4");
+            titleF.setAttribute("id", title);
+            titleF.appendChild(document.createTextNode(title));
+            div.appendChild(titleF);
+            var t = document.getElementById(title);
+            titleF.setAttribute("href", "postDetail.php?id=" + question_id);
 
-                    // date
-                    var dateF = document.createElement("p");
-                    dateF.setAttribute("class", jsDate);
-                    dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
-                    div.appendChild(dateF);
+            // date
+            var dateF = document.createElement("p");
+            dateF.setAttribute("class", jsDate);
+            dateF.appendChild(document.createTextNode(year + "-" + month + "-" + day));
+            div.appendChild(dateF);
 
-                    // Question
-                    var questionF = document.createElement("p");
-                    questionF.setAttribute("class", question);
-                    questionF.appendChild(document.createTextNode(question));
-                    div.appendChild(questionF);
+            // Question
+            var questionF = document.createElement("p");
+            questionF.setAttribute("class", question);
+            questionF.appendChild(document.createTextNode(question));
+            div.appendChild(questionF);
 
-                    div.appendChild(document.createElement("br"));
+            div.appendChild(document.createElement("br"));
 
-                    var body = document.getElementById("postbody");
-                    body.appendChild(div);
-                }());                 
-            }
+            var body = document.getElementById("postbody");
+            body.appendChild(div);
+        }());                 
+    }
 }
 
 // From http://developertipsandtricks.blogspot.com/2014/03/post-data-with-javascript-like-form.html

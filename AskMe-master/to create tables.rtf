@@ -64,6 +64,7 @@ CREATE TABLE replies (\
 	\kerning1\expnd0\expndtw0 id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
 	doctor_id MEDIUMINT UNSIGNED NOT NULL,\
 	question_id MEDIUMINT UNSIGNED NOT NULL,\
+	date datetime not null,\
 	likes INT,\
 	reply TEXT NOT NULL,\
 	PRIMARY KEY (id),\
