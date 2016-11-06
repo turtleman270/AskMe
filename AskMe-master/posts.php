@@ -15,7 +15,15 @@
         <title>Ask Me</title>
     </head>
     <body>
-
+        <div id="sidebar">
+            <br><form action="addpost.php" method="POST">";
+            <strong><label>Ask a Question</label></strong><hr>";
+            <label>Title: <input type="text" size = 32 name="title"/></label><br>";
+            <label>Question: </label><br><textarea cols="30" rows="9" name="question"></textarea><br>";
+            <input type="hidden" name="token" value="$token"/>";
+            <input type=\"submit\" value=\"Submit\"/>";
+            </form><br>
+        </div>
         <div id = "postbody"></div>
         <script>
         <?php

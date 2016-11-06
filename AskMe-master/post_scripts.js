@@ -9,7 +9,7 @@
 // Gets user's assignments from database
 
 // Remove all rows from calendar table
-function clearCalendar() {
+function clearPosts() {
     while (document.getElementById("postbody").firstChild) {
         document.getElementById("postbody").removeChild(document.getElementById("postbody").firstChild);
     }
@@ -17,7 +17,7 @@ function clearCalendar() {
 
 function getPosts() {
 
-    clearCalendar();
+    clearPosts();
 
     var dataString = "token=" + encodeURIComponent(token);
     var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance

@@ -35,7 +35,7 @@ function newUserAjax(event) {
         alert(event.target.responseText);
         var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
         if (jsonData.success) {
-            alert("New user created! ID assigned : "  + jsonData.userid + "please log in.");
+            alert("New user created! ID assigned : "  + jsonData.userid + "\n Please log in.");
         } else {
             alert("New user not created.  " + jsonData.message);
         }
