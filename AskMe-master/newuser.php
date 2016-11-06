@@ -11,46 +11,39 @@
         // Valid user and password, add to users
         else {
             // Use a prepared statement
-            $stmt = $mysqli->prepare("insert into users (password, age, weight, height, gender, allergies, smoke, alcohol,
-    drugs) values (?,?,?,?,?,?,?,?,?)");
+            $stmt = $mysqli->prepare("insert into users (password, userid) values (?, ?)");
             if(!$stmt){
                 printf("Query Prep Failed: %s\n", $mysqli->error);
                 exit;
             }
             // Bind the parameter
-            $stmt->bind_param('siddsssss',$pwd_hash, $age, $weight,$height,$gender,$allergies, $smoke, $alcohol, $drugs);
+            $stmt->bind_param('ss',$pwd_hash, $userid);
             // Encrypt password
             $pwd_hash = crypt($_POST['newpassword']);
-            $age = $_POST['age'];
-            $weight = $_POST['weight'];
-            $height = $_POST['height'];
-            $gender = $_POST['gender'];
-            $allergies = $_POST['allergies'];
-            $smoke = $_POST['smoke'];
-            $alcohol = $_POST['alcohol'];
-            $drugs = $_POST['drugs'];
+            $userid = crypt(1);
             // Execute and close
             $stmt->execute();
             $stmt->close();
         }
 
         // Use a prepared statement
-        $stmt = $mysqli->prepare("SELECT id FROM users ORDER BY id DESC LIMIT 1");
+        $stmt = $mysqli->prepare("SELECT id, userid FROM users ORDER BY id DESC LIMIT 1");
         
         // Execute
         $stmt->execute();
         // Bind the results
-        $stmt->bind_result($user_id);
+        $stmt->bind_result($id, $user_id);
         //set the session id
-        $_SESSION["user_id"] = $user_id;
+        $_SESSION["user_id"] = $id;
         // Fetch and close
         $stmt->fetch();
         $stmt->close();
 
-        $assignments_array['success'] = true;
-        $assignments_array['id'] = $user_id;
+        $newuser_array['success'] = true;
+        $newuser_array['id'] = $id;
+        $newuser_array['userid'] = $user_id;
         
-        echo json_encode($assignments_array);
+        echo json_encode($newuser_array);
         exit;
 
 ?>

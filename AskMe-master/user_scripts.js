@@ -25,17 +25,8 @@ function loginAjax(event) {
 function newUserAjax(event) {
     
     var newpassword = document.getElementById("newpassword").value; // Get the password from the form
-    var age = document.getElementById("age").value; // Get the username from the form
-    var weight = document.getElementById("weight").value; // Get the username from the form
-    var height = document.getElementById("height").value; // Get the username from the form
-    var gender = document.getElementById("gender").value; // Get the username from the form
-    var smoke = document.getElementById("smoke").value; // Get the username from the form
-    var alcohol = document.getElementById("alcohol").value; // Get the username from the form
-    var drugs = document.getElementById("drugs").value; // Get the username from the form
-    var allergies = document.getElementById("allergies").value; // Get the username from the form
  
-    var dataString = "newpassword=" + encodeURIComponent(newpassword) + "&age=" + encodeURIComponent(age) + "&weight=" + encodeURIComponent(weight) +"&height=" + encodeURIComponent(height)+"&gender=" + encodeURIComponent(gender)+"&smoke=" + encodeURIComponent(smoke)
-    +"&alcohol=" + encodeURIComponent(alcohol)+"&drugs=" + encodeURIComponent(drugs)+"&allergies=" + encodeURIComponent(allergies);
+    var dataString = "newpassword=" + encodeURIComponent(newpassword);
  
     var xmlHttp = new XMLHttpRequest(); // Initialize our XMLHttpRequest instance
     xmlHttp.open("POST", "newuser.php", true); // Starting a POST request
@@ -44,7 +35,7 @@ function newUserAjax(event) {
         alert(event.target.responseText);
         var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
         if (jsonData.success) {
-            alert("New user created; ID assigned : "  + jsonData.id + "please log in.");
+            alert("New user created! ID assigned : "  + jsonData.userid + "please log in.");
         } else {
             alert("New user not created.  " + jsonData.message);
         }

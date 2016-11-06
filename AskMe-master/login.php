@@ -6,9 +6,9 @@
     require 'database.php';
      
     // Use a prepared statement
-    $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE id=?");   
+    $stmt = $mysqli->prepare("SELECT COUNT(*), id, password FROM users WHERE userid=?");   
     // Bind the parameter
-    $stmt->bind_param('i', $id);
+    $stmt->bind_param('s', $id);
     $id = $_POST['userid'];
     // Execute
     $stmt->execute();

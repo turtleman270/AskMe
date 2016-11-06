@@ -1,12 +1,43 @@
 {\rtf1\ansi\ansicpg1252\cocoartf1404\cocoasubrtf470
-{\fonttbl\f0\fswiss\fcharset0 Helvetica;\f1\fmodern\fcharset0 CourierNewPSMT;}
-{\colortbl;\red255\green255\blue255;\red0\green0\blue0;\red255\green255\blue255;}
+{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
 \paperw12240\paperh15840\margl1440\margr1440\vieww10800\viewh8400\viewkind0
 \pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
 
 \f0\fs24 \cf0 CREATE TABLE users (\
 	id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
+	userid varchar(30) NOT NULL,\
 	password  VARCHAR(100) NOT NULL,\
+	PRIMARY KEY (id)\
+) \expnd0\expndtw0\kerning0
+engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\
+\
+\
+// no tracking of the health info\
+\
+\kerning1\expnd0\expndtw0 CREATE TABLE doctors (\
+	id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
+	name VARCHAR(30) NOT NULL,\
+	password  VARCHAR(100) NOT NULL,\
+	gender 
+\fs26 \expnd0\expndtw0\kerning0
+ENUM('male', 'female', 'other') 
+\fs24 \kerning1\expnd0\expndtw0 NOT NULL
+\fs26 \expnd0\expndtw0\kerning0
+,\
+	field TINYTEXT NOT NULL,\
+	description TEXT,\
+	likes INT,
+\fs24 \kerning1\expnd0\expndtw0 \
+	PRIMARY KEY (id)\
+) \expnd0\expndtw0\kerning0
+engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\kerning1\expnd0\expndtw0 \
+\
+CREATE TABLE questions (\
+	id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
+	title VARCHAR(100) NOT NULL,\
+	questions TEXT NOT NULL,\
+	date datetime not null,\
 	age TINYINT NOT NULL,\
 	weight FLOAT NOT NULL,\
 	height FLOAT NOT NULL,\
@@ -23,48 +54,17 @@ ENUM('male', 'female', 'other')
 	smoke ENUM('yes', 'no'),\
 	alcohol ENUM('yes', 'no'),\
 	drugs ENUM('yes', 'no'),\
-	work_type VARCHAR(30),\
-	diets TEXT,
+	others TEXT,
 \fs24 \kerning1\expnd0\expndtw0 \
 	PRIMARY KEY (id)\
 ) \expnd0\expndtw0\kerning0
-engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\
-\
-\kerning1\expnd0\expndtw0 CREATE TABLE doctors (\
-	id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
-	name VARCHAR(30) NOT NULL,\
-	password  VARCHAR(100) NOT NULL,\
-	gender 
-\fs26 \expnd0\expndtw0\kerning0
-ENUM('male', 'female', 'other') 
-\fs24 \kerning1\expnd0\expndtw0 NOT NULL
-\fs26 \expnd0\expndtw0\kerning0
-,\
-	field TINYTEXT NOT NULL,\
-	description TEXT,
-\fs24 \kerning1\expnd0\expndtw0 \
-	PRIMARY KEY (id)\
-) \expnd0\expndtw0\kerning0
-engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\kerning1\expnd0\expndtw0 \
-\
-CREATE TABLE questions (\
-	id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
-	user_id MEDIUMINT UNSIGNED NOT NULL,\
-	title VARCHAR(100) NOT NULL,\
-	questions TEXT NOT NULL,\
-	date datetime not null,\
-	PRIMARY KEY (id),\
-	FOREIGN KEY(user_id) REFERENCES users(id) 
-\f1\fs26 \cf2 \cb3 \expnd0\expndtw0\kerning0
-ON DELETE CASCADE ON UPDATE CASCADE
-\f0\fs24 \kerning1\expnd0\expndtw0 \
-\cf0 \cb1 ) \expnd0\expndtw0\kerning0
 engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\
 \
 CREATE TABLE replies (\
 	\kerning1\expnd0\expndtw0 id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
 	doctor_id MEDIUMINT UNSIGNED NOT NULL,\
 	question_id MEDIUMINT UNSIGNED NOT NULL,\
+	likes INT,\
 	reply TEXT NOT NULL,\
 	PRIMARY KEY (id),\
 	FOREIGN KEY(question_id) REFERENCES questions(id),\
@@ -72,23 +72,14 @@ CREATE TABLE replies (\
 ) \expnd0\expndtw0\kerning0
 engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\
 \
-\
-CREATE TABLE ratings (\
+CREATE TABLE follow (\
 	\kerning1\expnd0\expndtw0 id MEDIUMINT UNSIGNED NOT NULL AUTO_INCREMENT,\
+	user_id MEDIUMINT UNSIGNED NOT NULL,\
 	question_id MEDIUMINT UNSIGNED NOT NULL,\
-	doctor_id MEDIUMINT UNSIGNED NOT NULL,\
-	rating 
-\fs26 \expnd0\expndtw0\kerning0
-ENUM('1', '2', '3','4','5') 
-\fs24 \kerning1\expnd0\expndtw0 NOT NULL
-\fs26 \expnd0\expndtw0\kerning0
-,
-\fs24 \kerning1\expnd0\expndtw0 \
 	PRIMARY KEY (id),\
 	FOREIGN KEY(question_id) REFERENCES questions(id),\
-	FOREIGN KEY(doctor_id) REFERENCES doctors(id)\
+	FOREIGN KEY(user_id) REFERENCES users(id) \
 ) \expnd0\expndtw0\kerning0
-engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\kerning1\expnd0\expndtw0 \
-\
+engine = INNODB DEFAULT character SET = utf8 COLLATE = utf8_general_ci;\
 \
 }

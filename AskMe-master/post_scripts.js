@@ -76,8 +76,29 @@ function getPosts() {
 }
 
 
-// Add assignment to database
+// Add post to database
 function addPost() { 
+    // Get fields from form
+    var question_id = $("#question_id").val();
+    
+    var dataString = "token=" + encodeURIComponent(token) + "&question_id=" + encodeURIComponent(question_id); // Initialize our XMLHttpRequest instance
+    xmlHttp.open("POST", "addPost.php", true); // Starting a POST request
+    xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+    xmlHttp.addEventListener("load", function(event){
+        var jsonData = JSON.parse(event.target.responseText); // Parse the JSON into a JavaScript object
+        if (jsonData.success) {
+            alert("Question asked!");
+            getPosts();
+        } else {
+            alert("Question not added.  " + jsonData.message);
+        }
+        this.removeEventListener("load", this);
+    }, false); // Bind the callback to the load event
+    xmlHttp.send(dataString); // Send the data
+}
+
+// follow post
+function followPost() { 
     // Get fields from form
     var title = $("#title").val();
     var question = $("#question").val();
@@ -98,6 +119,8 @@ function addPost() {
     }, false); // Bind the callback to the load event
     xmlHttp.send(dataString); // Send the data
 }
+
+
 
 
 // Log out
